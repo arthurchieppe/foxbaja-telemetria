@@ -32,51 +32,67 @@ st.set_page_config(
     layout="wide"
 )
 
+
 st.title('Dashboard Fox Baja')
-st.columns(3)
 
-kpi1, kpi2, kpi3 = st.columns(3)
-
-# Velocidade:
-kpi1.metric(
-    label="Velocidade",
-    value=int(velocidade)
-)
-
-# Temperatura:
-kpi2.metric(
-    label="Temperatura da CVT",
-    value=int(temp_cvt)
-)
-
-# Gasolina:
-kpi3.metric(
-    label="Nivel de combustivel",
-    value=combustivel
-)
+placeholder = st.empty()
 
 
+for i in range(200):
 
-fig_vel, fig_temp = st.columns(2)
+    df = get_data()
 
-with fig_vel:
-    st.markdown("### Histórico de Velocidade")
-    fig = px.line(df, x="tempo", y="velocidade")
-    fig.update_layout(
-    autosize=False,
-    width=600,
-    height=500)
-    st.write(fig)
+    with placeholder.container():
+        st.columns(3)
 
-with fig_temp:
-    st.markdown('### Histórico de temperatura')
-    fig2 = fig = px.line(df, x="tempo", y="temperatura")
-    fig2.update_layout(
-    autosize=False,
-    width=600,
-    height=500)
-    st.write(fig2)
+        kpi1, kpi2, kpi3 = st.columns(3)
+
+        # Velocidade:
+        kpi1.metric(
+            label="Velocidade",
+            value=int(velocidade)
+        )
+
+        # Temperatura:
+        kpi2.metric(
+            label="Temperatura da CVT",
+            value=int(temp_cvt)
+        )
+
+        # Gasolina:
+        kpi3.metric(
+            label="Nivel de combustivel",
+            value=combustivel
+        )
 
 
-st.markdown("### Base completa")
-st.dataframe(df)
+
+        fig_vel, fig_temp = st.columns(2)
+
+        with fig_vel:
+            st.markdown("### Histórico de Velocidade")
+            fig = px.line(df, x="tempo", y="velocidade")
+            fig.update_layout(
+            autosize=False,
+            width=600,
+            height=500)
+            st.write(fig)
+
+        with fig_temp:
+            st.markdown('### Histórico de temperatura')
+            fig2 = fig = px.line(df, x="tempo", y="temperatura")
+            fig2.update_layout(
+            autosize=False,
+            width=600,
+            height=500)
+            st.write(fig2)
+
+
+        st.markdown("### Base completa")
+        st.dataframe(df)
+    time.sleep(1)
+
+
+
+
+
