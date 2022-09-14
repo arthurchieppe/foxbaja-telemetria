@@ -9,9 +9,9 @@ import sys
 import sqlite3
 import os
 
-velocidade=59
-temp_cvt=34
-combustivel=1
+# velocidade=59
+# temp_cvt=34
+# combustivel=1
 
 # def get_data_database():
 #     ls_time = []
@@ -36,7 +36,7 @@ def get_data():
         c = conn.cursor()
 
         c.execute("""
-            SELECT id, velocidade, temperatura, rotacao, timestamp FROM telemetria ORDER BY id DESC LIMIT 20
+            SELECT id, velocidade, temperatura, rotacao, timestamp FROM telemetria ORDER BY id DESC LIMIT 100
         """)
         rows = c.fetchall()
         # print(rows)
@@ -70,19 +70,19 @@ for i in range(200):
         # Velocidade:
         kpi1.metric(
             label="Velocidade",
-            value=int(velocidade)
+            value=int(df['velocidade'].iloc[-1])
         )
 
         # Temperatura:
         kpi2.metric(
             label="Temperatura da CVT",
-            value=int(temp_cvt)
+            value=int(df['temperatura'].iloc[-1])
         )
 
-        # Gasolina:
+        # Rotacao:
         kpi3.metric(
-            label="Nivel de combustivel",
-            value=combustivel
+            label="Rotação do Motor",
+            value=df['rotacao'].iloc[-1]
         )
 
 
