@@ -24,4 +24,4 @@ while(1):
     print ("Recebido: ",x.decode('utf-8'))
     
     
-    time.sleep(0.5)
+    time.sleep(0.1)
