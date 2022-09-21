@@ -9,6 +9,8 @@ import sys
 import sqlite3
 import os
 
+
+
 # velocidade=59
 # temp_cvt=34
 # combustivel=1
@@ -28,6 +30,8 @@ import os
 #     df = pd.DataFrame(data=data)
 #     return df
 
+
+
 def get_data():
     if 'foxbaja_telemetria.db' not in os.listdir():
         print("\nERRO: base de dados nao existe\n")
@@ -36,7 +40,7 @@ def get_data():
         c = conn.cursor()
 
         c.execute("""
-            SELECT id, velocidade, temperatura, rotacao, timestamp FROM telemetria ORDER BY id DESC LIMIT 100
+            SELECT id, velocidade, temperatura, rotacao, timestamp FROM telemetria ORDER BY timestamp DESC LIMIT 100
         """)
         rows = c.fetchall()
         # print(rows)
@@ -44,7 +48,6 @@ def get_data():
         return df
 
 
-df = get_data()
 
 st.set_page_config(
     page_title="Dashboard Fox Baja",
@@ -58,7 +61,7 @@ st.title('Dashboard Fox Baja')
 placeholder = st.empty()
 
 
-for i in range(200):
+while(True):
 
     df = get_data()
 
@@ -70,19 +73,19 @@ for i in range(200):
         # Velocidade:
         kpi1.metric(
             label="Velocidade",
-            value=int(df['velocidade'].iloc[-1])
+            value=int(df['velocidade'].iloc[0])
         )
 
         # Temperatura:
         kpi2.metric(
             label="Temperatura da CVT",
-            value=int(df['temperatura'].iloc[-1])
+            value=int(df['temperatura'].iloc[0])
         )
 
         # Rotacao:
         kpi3.metric(
             label="Rotação do Motor",
-            value=df['rotacao'].iloc[-1]
+            value=df['rotacao'].iloc[0]
         )
 
 
