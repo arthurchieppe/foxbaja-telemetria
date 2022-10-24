@@ -11,7 +11,14 @@ GPIO.setwarnings(False)
 #Configura a serial e a velocidade de transmissao
 ser = serial.Serial('/dev/serial0', 115200)
 time.sleep(3) 
- 
+
+def checksum(data):
+    filtered = data.split("/")
+    print(f"edir {filtered[0]}")
+    checksum = 0
+    for i in range(0, len(filtered[0])):
+        checksum += ord(filtered[0][i])
+    return checksum
  
 while(1):
     
@@ -19,9 +26,14 @@ while(1):
     
     #Aguarda a string na serial
     x = ser.readline()
-    
-    #Mostra na tela a string recebida
-    print ("Recebido: ",x.decode('utf-8'))
-    
-    
+    msg = x.decode('utf-8')
+    try:
+        splitted = msg.split("/")
+        #Mostra na tela a string recebida
+        print("Recebido: ", msg)
+        checksum_result = checksum(splitted[0])
+        if checksum_result == int(splitted[1]):
+            pass # Salva no banco de dados
+    except:
+        pass
     time.sleep(0.1)
