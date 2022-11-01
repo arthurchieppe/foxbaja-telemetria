@@ -8,7 +8,7 @@ import datetime
 import sys
 import sqlite3
 import os
-
+import subprocess
 
 
 # velocidade=59
@@ -40,14 +40,14 @@ def get_data():
         c = conn.cursor()
 
         c.execute("""
-            SELECT id, velocidade, temperatura, rotacao, timestamp FROM telemetria ORDER BY timestamp DESC LIMIT 100
+            SELECT id, rotacao, velocidade, freio, combustivel, temperatura, timestamp FROM telemetria ORDER BY timestamp DESC LIMIT 100
         """)
         rows = c.fetchall()
         # print(rows)
-        df = pd.DataFrame(columns=['id', 'velocidade', 'temperatura', 'rotacao', 'timestamp'], data=rows)
+        df = pd.DataFrame(columns=['id', 'rotacao', 'velocidade', 'freio', 'combustivel', 'temperatura', 'timestamp'], data=rows)
         return df
 
-
+subprocess.run([f"{sys.executable}", "lora.py"])
 
 st.set_page_config(
     page_title="Dashboard Fox Baja",

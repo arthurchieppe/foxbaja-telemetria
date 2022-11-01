@@ -15,8 +15,16 @@ with sqlite3.connect('foxbaja_telemetria.db') as conn:
             velocidade INTEGER NOT NULL,
             temperatura INTEGER NOT NULL,
             rotacao INTEGER NOT NULL,
+            combustivel INTEGER NOT NULL,
+            freio INTEGER NOT NULL,
             timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
         )
         """)
+    c.execute(f"""
+            INSERT INTO telemetria 
+            (rotacao, velocidade, freio, combustivel, temperatura)
+            VALUES
+            (0, 0, 0, 0, 0)
+            """)
 
     conn.commit()
