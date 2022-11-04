@@ -16,13 +16,15 @@ with sqlite3.connect('foxbaja_telemetria.db') as conn:
         velocidade = random.randint(20,30)
         temperatura = random.randint(60,90)
         rotacao = random.randint(2000,3000)
+        freio = random.randint(50,100)
+        combustivel = random.randint(1, 30)
         c.execute(f"""
         INSERT INTO telemetria 
-        (velocidade, temperatura, rotacao)
+        (rotacao, velocidade, freio, combustivel, temperatura)
         VALUES
-        ({velocidade}, {temperatura}, {rotacao})
+        ({rotacao}, {velocidade}, {freio}, {combustivel}, {temperatura})
         """)
 
         conn.commit()
-        print(f"Velocidade: {velocidade} - Temperatura: {temperatura} - Rotacao: {rotacao}\n")
+        print(f"Velocidade: {velocidade} - Temperatura: {temperatura} - Rotacao: {rotacao} - Freio: {freio} - Combustivel: {combustivel}\n")
         time.sleep(1)

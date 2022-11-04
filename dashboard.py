@@ -9,6 +9,8 @@ import sys
 import sqlite3
 import os
 import subprocess
+import threading
+from lora import lora_thread
 
 
 # velocidade=59
@@ -47,7 +49,7 @@ def get_data():
         df = pd.DataFrame(columns=['id', 'rotacao', 'velocidade', 'freio', 'combustivel', 'temperatura', 'timestamp'], data=rows)
         return df
 
-subprocess.run([f"{sys.executable}", "lora.py"])
+
 
 st.set_page_config(
     page_title="Dashboard Fox Baja",
@@ -60,6 +62,14 @@ st.title('Dashboard Fox Baja')
 
 placeholder = st.empty()
 
+# @st.cache
+def run_thread():
+    t = threading.Thread(target=lora_thread, name=lora_thread)
+    t.daemon = True
+    t.start()
+    return
+
+run_thread()
 
 while(True):
 
